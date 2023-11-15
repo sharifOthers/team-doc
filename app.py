@@ -18,6 +18,7 @@ logging.basicConfig(format="\n%(asctime)s\n%(message)s", level=logging.INFO, for
 WEAVIATE_URL = str(st.secrets["WEAVIATE_URL"])
 WEAVIATE_API = str(st.secrets["WEAVIATE_API"])
 COHERE_API_KEY = str(st.secrets["COHERE_API_KEY"])
+QDRANT_API_KEY = st.st.secrets["QDRANT_API_KEY"]
 
 #WEAVIATE_URL = "https://team-doc-v1-40c8yujm.weaviate.network/"
 #WEAVIATE_API = "xBGqPfNI6s7RANvuQV0GXBJBbCxiku7Kiqbh"
@@ -35,8 +36,9 @@ from qdrant_client import QdrantClient
 
 qdrant = QdrantClient(
     "https://137b9441-3570-4545-ba71-64812d6bea00.us-east4-0.gcp.cloud.qdrant.io",
-    api_key = "e9qzpSdpn0Pgw-VrEryJHuZib4an3mEQXHllN9bJW1RKJORTJE4YcA"
+    api_key = QDRANT_API_KEY
 )
+
 response = qdrant.get_collections()
 for collection in response.collections:
     if collection.name != "log":
