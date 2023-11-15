@@ -126,7 +126,7 @@ def complete(text, max_tokens, temperature):
         )
 
 # Configure Streamlit page and state
-st.set_page_config(page_title="Co-Complete", page_icon="🍩*************")
+st.set_page_config(page_title="Team-Doc", page_icon="🍩*************")
 
 
 # Store the initial value of widgets in session state
