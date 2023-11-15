@@ -3,6 +3,7 @@ import logging
 import weaviate
 import cohere
 import streamlit as st
+from datetime import datetime
 import streamlit.components.v1 as components
 from qdrant_client import models
 from qdrant_client import QdrantClient
@@ -116,7 +117,7 @@ def complete(text, max_tokens, temperature):
             
             vectors = []
             vectors.append(models.PointStruct(id = str(uuid.uuid1()), vector = [1,2],
-                        payload = {"text": text, "initial_prompt":initial_prompt, "extract_infos":extract_infos,"final_prompt":final_prompt,"completed_text":completed_text}))
+                        payload = {"time": datetime.now(),"text": text, "initial_prompt":initial_prompt, "extract_infos":extract_infos,"final_prompt":final_prompt,"completed_text":completed_text}))
             qdrant.upsert(
             collection_name="log",
             points = vectors
