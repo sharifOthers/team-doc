@@ -114,14 +114,6 @@ def complete(text, max_tokens, temperature):
             st.session_state.n_requests += 1
             st.session_state.complete = (completed_text)
             
-            logging.info(
-                f"""
-                Info: 
-                Input prompt: {completed_text}
-                Max tokens: {max_tokens}
-                Temperature: {temperature}
-                """
-            )
             vectors = []
             vectors.append(models.PointStruct(id = str(uuid.uuid1()), vector = [1,2],
                         payload = {"text": text, "initial_prompt":initial_prompt, "extract_infos":extract_infos,"final_prompt":final_prompt,"completed_text":completed_text}))
