@@ -15,7 +15,9 @@ load_dotenv()
 
 # Assign credentials from environment variable or streamlit secrets dict
 # co = cohere.Client(os.getenv("COHERE_API_KEY")) or st.secrets["COHERE_API_KEY"]
-COHERE_API_KEY = cohere.Client(os.getenv("COHERE_API_KEY")) or st.secrets["COHERE_API_KEY"]
+WEAVIATE_URL = "https://team-doc-v1-40c8yujm.weaviate.network/"
+WEAVIATE_API = "xBGqPfNI6s7RANvuQV0GXBJBbCxiku7Kiqbh"
+COHERE_API_KEY = '2aZhVZ87GMOJ0RniHz8Pnif0irfotwkBNA0iTXAq'
 cohere_client = cohere.Client(COHERE_API_KEY)
 
 class Completion:
