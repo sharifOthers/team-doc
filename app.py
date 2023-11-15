@@ -1,8 +1,13 @@
+import uuid
 import logging
 import weaviate
 import cohere
 import streamlit as st
 import streamlit.components.v1 as components
+from qdrant_client import models
+from qdrant_client import QdrantClient
+
+
 
 from completion import Completion
 
@@ -13,7 +18,6 @@ WEAVIATE_URL = "https://team-doc-v1-40c8yujm.weaviate.network/"
 WEAVIATE_API = "xBGqPfNI6s7RANvuQV0GXBJBbCxiku7Kiqbh"
 COHERE_API_KEY = '2aZhVZ87GMOJ0RniHz8Pnif0irfotwkBNA0iTXAq'
 
-
 weviate_client = weaviate.Client(
     url=WEAVIATE_URL,
     auth_client_secret=weaviate.AuthApiKey(api_key=WEAVIATE_API),
@@ -21,6 +25,21 @@ weviate_client = weaviate.Client(
         "X-Cohere-Api-Key": COHERE_API_KEY 
     }
 )
+
+from qdrant_client import QdrantClient
+
+qdrant = QdrantClient(
+    "https://137b9441-3570-4545-ba71-64812d6bea00.us-east4-0.gcp.cloud.qdrant.io",
+    api_key = "e9qzpSdpn0Pgw-VrEryJHuZib4an3mEQXHllN9bJW1RKJORTJE4YcA"
+)
+response = qdrant.get_collections()
+for collection in response.collections:
+    if collection.name != "log":
+        qdrant.create_collection(
+                collection_name="log",
+                vectors_config=models.VectorParams(size=2, distance=models.Distance.COSINE),
+                timeout=120,
+            )
 
 cohere_client_ = cohere.Client(COHERE_API_KEY)
 
@@ -53,7 +72,7 @@ def complete(text, max_tokens, temperature):
     """
     Complete Text.
     """
-    if st.session_state.n_requests >= 100:
+    if st.session_state.n_requests >= 10:
         st.session_state.text_error = "Too many requests. Please wait a few seconds before completing another Text."
         logging.info(f"Session request limit reached: {st.session_state.n_requests}")
         st.session_state.n_requests = 1
@@ -86,7 +105,6 @@ def complete(text, max_tokens, temperature):
             initial_prompt = f"Remove person names, age, any place name from this content below extract only diseases names and the symptoms the patient is having also extract the steps that has been taken to cure the patients.Return only this values{similar_contents}. \n",  
 
             extract_infos = completion_.complete(initial_prompt, max_tokens, temperature)
-            logging.info("extract_infos",extract_infos)
             
             final_prompt = f"Act like a doctors to save humans. The current information of the patients are: {text}. Previously some patients came with this and they are treated with this: \n{extract_infos}. Use those information and your knowledge to give doctor takes necessary steps and give also some follow up questions to ask patients .Do not include any JSOn , HTML body.",  
 
@@ -104,7 +122,13 @@ def complete(text, max_tokens, temperature):
                 Temperature: {temperature}
                 """
             )
-
+            vectors = []
+            vectors.append(models.PointStruct(id = str(uuid.uuid1()), vector = [1,2],
+                        payload = {"text": text, "initial_prompt":initial_prompt, "extract_infos":extract_infos,"final_prompt":final_prompt,"completed_text":completed_text}))
+            qdrant.upsert(
+            collection_name="log",
+            points = vectors
+        )
 
 # Configure Streamlit page and state
 st.set_page_config(page_title="Co-Complete", page_icon="🍩*************")
