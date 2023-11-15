@@ -45,12 +45,10 @@ class Completion:
                 max_tokens = max_tokens,
                 temperature = temperature)
             
-            print("generated text:\n", response.generations[0].text)
             return response.generations[0].text
 
         
         except Exception as e:
             logging.error(f"Cohere API error: {e}")
             st.session_state.text_error = f"Cohere API error: {e}"
-            print("Error:", e)
 
