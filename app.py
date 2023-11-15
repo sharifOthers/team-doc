@@ -103,11 +103,11 @@ def complete(text, max_tokens, temperature):
             #prompt_ = f"You are here to acting here to help the doctors to save humans. DO not include person name of any patients personal details.You will analyze the case below and give suggestion to what to do in this kind of diseases \n {similar_contents}. \nAnswer as deeply as example like this example above.",  
 
             completion_ = Completion()
-            initial_prompt = f"Remove person names, age, any place name from this content below extract only diseases names and the symptoms the patient is having also extract the steps that has been taken to cure the patients.Return only this values{similar_contents}. \n",  
+            initial_prompt = f"Remove person names, age, and any place name from this content below extract only disease names and the symptoms the patient is having also extract the steps that have been taken to cure the patients. Return only these values{similar_contents}. \n",  
 
             extract_infos = completion_.complete(initial_prompt, max_tokens, temperature)
             
-            final_prompt = f"Act like a doctors to save humans. The current information of the patients are: {text}. Previously some patients came with this and they are treated with this: \n{extract_infos}. Use those information and your knowledge to give doctor takes necessary steps and give also some follow up questions to ask patients .Do not include any JSOn , HTML body.",  
+            final_prompt = f"Act like a doctor to save humans. The current information of the patients is: {text}. Previously some patients came with this and they are treated with this: \n{extract_infos}. Use that information and your knowledge to give the doctor takes necessary steps and also some follow-up questions to ask patients. Do not include any JSON, HTML body.",  
 
             completed_text = completion_.complete(final_prompt, 1000, temperature)
 
@@ -157,7 +157,7 @@ st.write(
 st.title("Welcome ")
 
 # text
-text = st.text_area(label="Enter text", height = 250, placeholder="Details that is needed for getting a good response.\n - Age and Gender with symptoms and suspected diseases names(if any).\n Example:\nA 25 year old female came with severe joint pain and swelling in both hands for eight months. Morning stiffness more than 1 hour everyday and pain relives gradually by doing regular activities.")
+text = st.text_area(label="Enter text", height = 250, placeholder="Details that is needed for getting a good response.\n - Age and Gender with symptoms and suspected diseases names(if any).\nExample:\nA 25 year old female came with severe joint pain and swelling in both hands for eight months. Morning stiffness more than 1 hour everyday and pain relives gradually by doing regular activities.")
 
 # max tokens
 max_tokens = st.slider('Pick max tokens', 1, 1024, value = 500)
