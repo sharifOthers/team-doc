@@ -157,7 +157,7 @@ st.write(
 st.title("Welcome ")
 
 # text
-text = st.text_area(label="Enter text", placeholder="Details that is needed for getting a good response.\n - Age and Gender with symptoms \n - Suspected diseases names")
+text = st.text_area(label="Enter text", height = 250, placeholder="Details that is needed for getting a good response.\n - Age and Gender with symptoms and suspected diseases names(if any).\n Example:\nA 25 year old female came with severe joint pain and swelling in both hands for eight months. Morning stiffness more than 1 hour everyday and pain relives gradually by doing regular activities.")
 
 # max tokens
 max_tokens = st.slider('Pick max tokens', 1, 1024, value = 500)
