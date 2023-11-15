@@ -11,9 +11,9 @@ logging.getLogger("complete").setLevel(logging.WARNING)
 
 # Load environment variables
 load_dotenv()
-WEAVIATE_URL = st.secrets["WEAVIATE_URL"]
-WEAVIATE_API = st.secrets["WEAVIATE_API"]
-COHERE_API_KEY = st.secrets["COHERE_API_KEY"]
+WEAVIATE_URL = str(st.secrets["WEAVIATE_URL"])
+WEAVIATE_API = str(st.secrets["WEAVIATE_API"])
+COHERE_API_KEY = str(st.secrets["COHERE_API_KEY"])
 logging.info(WEAVIATE_URL, WEAVIATE_API, COHERE_API_KEY)
 
 # Assign credentials from environment variable or streamlit secrets dict
