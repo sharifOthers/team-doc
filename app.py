@@ -15,9 +15,13 @@ from completion import Completion
 # Configure logger
 logging.basicConfig(format="\n%(asctime)s\n%(message)s", level=logging.INFO, force=True)
 
-WEAVIATE_URL = "https://team-doc-v1-40c8yujm.weaviate.network/"
-WEAVIATE_API = "xBGqPfNI6s7RANvuQV0GXBJBbCxiku7Kiqbh"
-COHERE_API_KEY = '2aZhVZ87GMOJ0RniHz8Pnif0irfotwkBNA0iTXAq'
+WEAVIATE_URL = str(st.secrets["WEAVIATE_URL"])
+WEAVIATE_API = str(st.secrets["WEAVIATE_API"])
+COHERE_API_KEY = str(st.secrets["COHERE_API_KEY"])
+
+#WEAVIATE_URL = "https://team-doc-v1-40c8yujm.weaviate.network/"
+#WEAVIATE_API = "xBGqPfNI6s7RANvuQV0GXBJBbCxiku7Kiqbh"
+#COHERE_API_KEY = '2aZhVZ87GMOJ0RniHz8Pnif0irfotwkBNA0iTXAq'
 
 weviate_client = weaviate.Client(
     url=WEAVIATE_URL,
