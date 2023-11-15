@@ -18,7 +18,7 @@ logging.basicConfig(format="\n%(asctime)s\n%(message)s", level=logging.INFO, for
 WEAVIATE_URL = str(st.secrets["WEAVIATE_URL"])
 WEAVIATE_API = str(st.secrets["WEAVIATE_API"])
 COHERE_API_KEY = str(st.secrets["COHERE_API_KEY"])
-QDRANT_API_KEY = st.st.secrets["QDRANT_API_KEY"]
+QDRANT_API_KEY = st.secrets["QDRANT_API_KEY"]
 
 #WEAVIATE_URL = "https://team-doc-v1-40c8yujm.weaviate.network/"
 #WEAVIATE_API = "xBGqPfNI6s7RANvuQV0GXBJBbCxiku7Kiqbh"
